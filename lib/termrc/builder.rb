@@ -14,9 +14,10 @@ module Termrc
     attr_accessor :commands
 
     def initialize(yml)
-      @root       = yml['root'] || File.dirname( File.expand_path('./Termfile') )
-      @commands   = yml['commands']
-      @windows    = yml['windows'] || []
+      @continueIfSuccess = if yml['shell'].eql? 'fish' then "; and " else " && " end
+      @root              = yml['root'] || File.dirname( File.expand_path('./Termfile') )
+      @commands          = yml['commands']
+      @windows           = yml['windows'] || []
 
       #support traditional format not using multiple windows
       if yml['layout']
@@ -168,7 +169,7 @@ module Termrc
     def execute_command(item, command, name)
       command = command.gsub('"', '\\"')
       command = command.gsub("'", "\\'")
-      command = "cd #{@root} && " + command if @root
+      command = "cd #{@root} #{@continueIfSuccess} " + command if @root
       <<-EOH
         tell item #{item} of sessions to set name to "#{name}" \n
         tell item #{item} of sessions to write text \"#{command}\" \n

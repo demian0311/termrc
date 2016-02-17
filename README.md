@@ -44,6 +44,13 @@ A `Termfile` file is a YAML file which requires two keys: `commands` and a `layo
 
 You can supply an optional key, `root`, which indicates the root directory you'd like each command to be run inside of. Have a look at [this project's Termfile](https://github.com/briangonzalez/termrc/blob/master/Termfile.test) for an example.
 
+If you use the [fish shell](https://github.com/fish-shell/fish-shell/) you need to specify that.
+
+```
+shell:
+  fish
+```
+
 You can also supply a `layout_type` value, either `row` or `column`, which denotes whether to use rows or columns as the means for splitting the window. This defaults to `layout_type: row`.
 
 **Tabs**
